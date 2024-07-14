@@ -1,36 +1,32 @@
 import numpy as np
 class perceptron :
     def __init__ (self, x1, x2):
-        self.x1 = x1
-        self.x2 = x2
+        self.x = np.array([x1, x2])
 
     def setAttribute(self, x1, x2):
-        self.x1 = x1
-        self.x2 = x2
+        self.x[0] = x1
+        self.x[1] = x2
     
     def AND(self) :
-        x = np.array([self.x1, self.x2])
         w = np.array([0.5, 0.5])
         bias = -0.7
-        if(np.sum(x*w) + bias > 0) :
+        if(np.sum(self.x*w) + bias > 0) :
             return 1
         else:
             return 0
         
     def NAND(self) :
-        x= np.array([self.x1, self.x2])
         w = np.array([-0.5, -0.5])
         bias = 0.7
-        if(np.sum(x*w) + bias > 0):
+        if(np.sum(self.x*w) + bias > 0):
             return 1
         else:
             return 0
         
     def OR(self) :
-        x = np.array([self.x1, self.x2])
         w = np.array([0.5, 0.5])
         bias = -0.4
-        if(np.sum(x*w) + bias > 0) :
+        if(np.sum(self.x*w) + bias > 0) :
             return 1
         else :
             return 0
