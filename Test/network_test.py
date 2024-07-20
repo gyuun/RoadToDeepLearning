@@ -1,7 +1,9 @@
 import pytest
-from network import *
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from Network import network
 
 def test_stair():
-    assert stair(3) == 1
+    assert network.stair(3) == 1
 def test_ReLu():
-    assert ReLu(3) == 3
+    assert network.ReLu(3) == 3
