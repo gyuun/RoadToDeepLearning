@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import numpy as np
-from Training.numerical_diff import numerical_gradient
+from Training.numerical_diff import gradient
 from Network.network import sigmoid, softmax
 
 class TwoLayerNet:
@@ -27,11 +27,9 @@ class TwoLayerNet:
     def predict(self, x):
         """가중치, 편향을 통해 출력값을 반환한다.
 
-        parameter : x
-        입력값 x 의 ndarray
+        parameter : x (batch_size, input_size)
 
-        return : y
-        출력층 의 softmax
+        return : y (batch_size, 10)
         """
         W1, W2 = self.params['W1'], self.params['W2']
         b1, b2 = self.params['b1'], self.params['b2']
@@ -44,15 +42,15 @@ class TwoLayerNet:
         return y
     
     def loss(self, x, t):
-        """미니배치 결과의 정확도를 반환한다.
+        """미니배치 학습에서 손실함수는 평균이다.
 
-        parameter : (x : 입력 값), (t : 정답 레이블)
+        parameter : (x : 2darray), (t : 2darray)
         """
         y = self.predict(x)
-        y = np.argmax(y, axis = 1)
+        y = np.argmax(y, axis = 1) # axis = 1 : 열을 따라색인을 찾음.
         t = np.argmax(t, axis = 1)
 
-        accuracy = np.sum(y == t) / float(x.shape[0])
+        accuracy = np.sum(y == t) / float(len(x))
         return accuracy
     
     def numerical_gradient(self, x, t):
@@ -63,10 +61,10 @@ class TwoLayerNet:
         loss_W = lambda W: self.loss(x, t)
 
         grads = {}
-        grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
-        grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
-        grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
-        grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+        grads['W1'] = gradient(loss_W, self.params['W1']) # W1은 2차원 데이터 784, 50
+        grads['b1'] = gradient(loss_W, self.params['b1'])
+        grads['W2'] = gradient(loss_W, self.params['W2'])
+        grads['b2'] = gradient(loss_W, self.params['b2'])
 
         return grads
     
