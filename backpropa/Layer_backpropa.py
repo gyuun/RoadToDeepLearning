@@ -4,6 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import numpy as np
 from collections import OrderedDict
 from backpropa.function_layer import ReLu, Affine, SoftmaxWithLoss
+from Training.numerical_diff import numerical_gradient
 
 class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size,
@@ -44,6 +45,17 @@ class TwoLayerNet:
             accuracy = np.sum(y == t) / float(x.shape[0])
 
             return accuracy
+        
+        def numerical_gradient(self, x, t):
+            loss_W = lambda W: self.loss(x,t)
+
+            grads = {}
+            grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
+            grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
+            grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
+            grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+
+            return grads
         
         def gradient(self, x, t):
             self.loss(x,t)
