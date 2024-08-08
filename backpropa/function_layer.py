@@ -4,10 +4,9 @@ import sys
 
 import numpy as np
 
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from Training.loss_function import cross_entropy_error
 from Network.network import softmax
-
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 class MulLayer:
     """곱셉 노드 클래스
