@@ -1,8 +1,12 @@
+"""Providng gradient descent method"""
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
 import numpy as np
+
 from Training.numerical_diff import function_2, numerical_gradient
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 def gradient_descent(f, init_x, lr= 0.01, step_num = 100):
     x= init_x
