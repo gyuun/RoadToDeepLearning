@@ -1,10 +1,13 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
 import numpy as np
+
 from collections import OrderedDict
 from backpropa.function_layer import ReLu, Affine, SoftmaxWithLoss
 from Training.numerical_diff import numerical_gradient
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size,
