@@ -5,8 +5,7 @@ def stair(x):
     """계단함수"""
     if x<=0 :
         return 0
-    else :
-        return 1
+    return 1
 
 
 def sigmoid(x) :
@@ -15,7 +14,7 @@ def sigmoid(x) :
     return 1/(1 + e**(-x))
 
 
-def ReLu(x) :
+def relu(x) :
     """렐루 함수"""
     return np.maximum(0,x)
 
@@ -29,6 +28,6 @@ def softmax(x):
     """소프트맥스 함수"""
     c = np.max(x)
     exp_a = np.exp(x-c)
-    sum = np.sum(exp_a)
+    sum_of_exp = np.sum(exp_a)
 
-    return exp_a/sum
+    return exp_a/sum_of_exp

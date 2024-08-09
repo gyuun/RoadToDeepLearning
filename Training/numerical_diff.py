@@ -1,16 +1,6 @@
 """Providing gradient method"""
 import numpy as np
 
-def numerical_diff (f, x):
-    h = 1e-50
-    return f(x + h) - f(x) /h
-
-
-def central_num_diff(f, x):
-    h = 1e-4 # 0.0001
-    return (f(x+h) - f(x-h)) / (2*h)
-
-
 def gradient(f, x):
     """f에 대해 x 에서의 gradient 를 반환한다.
     
