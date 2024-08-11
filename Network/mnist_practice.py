@@ -15,7 +15,7 @@ def init_network():
     """주어진 가중치파일에서 가중치들을 읽어 온다"""
     current_dir = os.getcwd()
     file_path = os.path.join(current_dir, 'BottomToDeepLearning/Network/sample_weight.pkl')
-    
+ 
     with open(file_path, 'rb') as f:
         network = pickle.load(f)
     return network
@@ -42,9 +42,8 @@ batch_size = 100
 for i in range(0, len(x), batch_size):
     x_batch = x[i:i+batch_size]
     y_batch = predict(network, x_batch)
-    p = np.argmax(y_batch, axis = 1) # argmax -> 가장 값이 큰 원소의 인덱스 반환 
+    p = np.argmax(y_batch, axis = 1) # argmax -> 가장 값이 큰 원소의 인덱스 반환
     accuracy_cnt += np.sum(p == t[i:i+batch_size])
 
 print("Accuracy:" + str(float(accuracy_cnt)/len(x)))
-    
 
