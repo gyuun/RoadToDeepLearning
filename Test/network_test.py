@@ -1,9 +1,13 @@
-import pytest
-import sys, os
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+"""Testing acivation functions"""
+import os
+import sys
+sys.path.append(os.getcwd())
 from Network import network
 
 def test_stair():
+    """계단 함수 테스트"""
     assert network.stair(3) == 1
+
 def test_ReLu():
-    assert network.ReLu(3) == 3
+    """렐루 함수 테스트"""
+    assert network.relu(3) == 3
