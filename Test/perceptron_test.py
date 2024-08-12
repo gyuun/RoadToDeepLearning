@@ -2,7 +2,6 @@
 import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
-import numpy as np
 from Perceptron import perceptron
 
 class TestClass:
