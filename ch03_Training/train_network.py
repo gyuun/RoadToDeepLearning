@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
 import numpy as np
-from Training.two_layer_net import TwoLayerNet
+from ch03_Training.two_layer_net import TwoLayerNet
 from dataset.mnist import load_mnist
 
 if __name__ == '__main__':

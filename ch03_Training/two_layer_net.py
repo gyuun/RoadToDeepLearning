@@ -3,8 +3,8 @@ import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
 import numpy as np
-from Training.numerical_diff import gradient
-from Network.network import sigmoid, softmax
+from ch03_Training.numerical_diff import gradient
+from ch02_Network.network import sigmoid, softmax
 
 class TwoLayerNet:
     """2층 신경망 클래스"""      
