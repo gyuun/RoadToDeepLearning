@@ -15,6 +15,8 @@ import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 from layers.layer_net import Layer
 from optimizer.adam import Adam
 from dataset.mnist import load_mnist
@@ -26,8 +28,8 @@ if __name__ == '__main__':
     x_test (10000, 784) t_test (10000, 10)
     """
     train_loss_list = []
-
-    REPETITION = 10000
+    train_accuracy_list =[]
+    REPETITION = 100
 #pylint: disable=duplicate-code
     BATCHSIZE = 100
     LEARNINGRATE = 0.001
@@ -42,16 +44,35 @@ if __name__ == '__main__':
         batch_mask = np.random.choice(len(x_train), BATCHSIZE)
         x_batch = x_train[batch_mask]
         t_batch = t_train[batch_mask]
+
         loss = network.loss(x_batch, t_batch)
+        train_loss_list.append(loss)
+
+        accuracy = network.accuracy()
+        train_accuracy_list.append(accuracy * 100)
+
         grad = network.gradient()
         optimizer.update(params=network.params, grads = grad)
 
-    for i in range(100):
+    total_accuracy = 0 #pylint: disable=invalid-name
+    for i in range(REPETITION):
         batch_mask = np.random.choice(len(x_test), BATCHSIZE)
         x_batch = x_test[batch_mask]
         t_batch = t_test[batch_mask]
         loss = network.loss(x_batch, t_batch)
-        accuracy = network.accuracy()
-        if i%10 == 0:
-            print(f'batch accuracy : {accuracy}')
-            print(f'loss value: {loss}')
+        total_accuracy = total_accuracy + network.accuracy()*100
+
+    print(f'Model\'s total_accuracy about test data : {total_accuracy / REPETITION}')
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+    sns.lineplot(
+        ax = axes[0],x= list(range(0,REPETITION,1)),
+        y=train_loss_list, markers='o')
+    axes[0].set_xlabel('Repetition')
+    axes[0].set_ylabel('loss')
+    sns.lineplot(
+        ax = axes[1], x= list(range(0,REPETITION,1)),
+        y= train_accuracy_list, markers= 'o', color='red')
+    axes[1].set_xlabel('Repetition')
+    axes[1].set_ylabel('accuracy')
+    plt.show()
