@@ -10,6 +10,7 @@ Optimizer :
     가중치 초기값 : He Value
     매개변수 갱신 : Adam
 """
+#pylint: disable=duplicate-code
 import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
@@ -27,6 +28,7 @@ if __name__ == '__main__':
     train_loss_list = []
 
     REPETITION = 10000
+#pylint: disable=duplicate-code
     BATCHSIZE = 100
     LEARNINGRATE = 0.001
     EPOCH= 600
