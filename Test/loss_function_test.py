@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
 import numpy as np
-from Training import loss_function
+from ch03_Training import loss_function
 
 def test_square():
     """오차제곱합 테스트"""

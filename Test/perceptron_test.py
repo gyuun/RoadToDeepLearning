@@ -2,7 +2,7 @@
 import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
-from Perceptron import perceptron
+from ch01_Perceptron import perceptron
 
 class TestClass:
     """테스트 클래스에는 test prefix 가 존재해야함"""

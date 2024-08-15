@@ -2,7 +2,7 @@
 import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
-from Network import network
+from ch02_Network import network
 
 def test_stair():
     """계단 함수 테스트"""
