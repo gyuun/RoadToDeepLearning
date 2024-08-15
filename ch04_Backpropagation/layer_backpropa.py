@@ -56,7 +56,7 @@ class TwoLayerNet:
         self.loss(x,t)
 
         dout = 1
-        dout = self.last_layer.backward(dout)
+        dout = self.last_layer.backward()
 
         layers = list(self.layers.values())
         layers.reverse()
