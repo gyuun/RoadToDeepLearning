@@ -1,14 +1,12 @@
-try:
-    import urllib.request
-except ImportError:
-    raise ImportError('You should use Python 3.x')
+"""providing load_mnist function"""
+import os
 import os.path
+import urllib.request
 import gzip
 import pickle
-import os
 import numpy as np
 
-url_base = 'http://yann.lecun.com/exdb/mnist/'
+URL_BASE = 'http://yann.lecun.com/exdb/mnist/'
 key_file = {
     'train_img': 'train-images-idx3-ubyte.gz',
     'train_label': 'train-labels-idx1-ubyte.gz',
@@ -19,10 +17,10 @@ key_file = {
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 save_file = dataset_dir + "/mnist.pkl"
 
-train_num = 60000
-test_num = 10000
+TRAIN_NUM = 60000
+TEST_NUM = 10000
 img_dim = (1, 28, 28)
-img_size = 784
+IMG_SIZE = 784
 
 def _download(file_name):
     """ file_name 이름의 데이터를 urllib requset 메소드를 통해
@@ -32,9 +30,9 @@ def _download(file_name):
 
     if os.path.exists(file_path):
         return
-    
+
     print("Downloading " + file_name + " ... ")
-    urllib.request.urlretrieve(url_base + file_name, file_path)
+    urllib.request.urlretrieve(URL_BASE + file_name, file_path)
     print("Done")
 
 def download_mnist():
@@ -58,12 +56,12 @@ def _load_label(file_name):
 
 def _load_img(file_name):
     file_path = dataset_dir + "/" + file_name
-    
+
     print("Converting" + file_name + "to Numpy Array ...")
     with gzip.open(file_path, 'rb') as f:
         data = np.frombuffer(f.read(), np.uint8, offset= 16)
 
-    data = data.reshape(-1, img_size)
+    data = data.reshape(-1, IMG_SIZE)
     print("Done")
 
     return data
@@ -71,13 +69,14 @@ def _load_img(file_name):
 def _convert_numpy():
     dataset = {}
     dataset['train_img'] = _load_img(key_file['train_img'])
-    dataset['train_label'] = _load_label(key_file['train_label'])    
+    dataset['train_label'] = _load_label(key_file['train_label'])
     dataset['test_img'] = _load_img(key_file['test_img'])
     dataset['test_label'] = _load_label(key_file['test_label'])
 
     return dataset
 
 def init_mnist():
+    """초기 실행 함수"""
     download_mnist()
     dataset = _convert_numpy()
     print("Creating pickle file ... ")
@@ -86,13 +85,13 @@ def init_mnist():
 
     print('Done')
 
-def _change_one_hot_label(X):
-    T = np.zeros((X.size, 10))
-    for idx, row in enumerate(T):
-        row[X[idx]] = 1
-        
-    return T
-    
+def _change_one_hot_label(x):
+    t = np.zeros((x.size, 10))
+    for idx, row in enumerate(t):
+        row[x[idx]] = 1
+
+    return t
+
 
 def load_mnist(normalize=True, flatten=True, one_hot_label=False):
     """MNIST 데이터셋 읽기
@@ -111,24 +110,24 @@ def load_mnist(normalize=True, flatten=True, one_hot_label=False):
     """
     if not os.path.exists(save_file):
         init_mnist()
-        
+
     with open(save_file, 'rb') as f:
         dataset = pickle.load(f)
-    
+
     if normalize:
         for key in ('train_img', 'test_img'):
             dataset[key] = dataset[key].astype(np.float32)
             dataset[key] /= 255.0
-            
+
     if one_hot_label:
         dataset['train_label'] = _change_one_hot_label(dataset['train_label'])
-        dataset['test_label'] = _change_one_hot_label(dataset['test_label'])    
-    
+        dataset['test_label'] = _change_one_hot_label(dataset['test_label'])
+
     if not flatten:
-         for key in ('train_img', 'test_img'):
+        for key in ('train_img', 'test_img'):
             dataset[key] = dataset[key].reshape(-1, 1, 28, 28)
 
-    return (dataset['train_img'], dataset['train_label']), (dataset['test_img'], dataset['test_label']) 
+    return (dataset['train_img'],dataset['train_label']),(dataset['test_img'],dataset['test_label'])
 
 
 if __name__ == '__main__':
