@@ -20,6 +20,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install numpy
+        pip install matplotlib
+        pip install seaborn
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
