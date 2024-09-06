@@ -10,7 +10,7 @@ def padding_2d(matrix : list, pad : int) -> list:
     padded_col = col + 2*pad
     for i in range(padded_row):
         new_col = [0 for i in range(padded_col)]
-        if (i >= pad) and (i < pad + row):
+        if (pad <= i < pad + row):
             padded_matrix.append(new_col[:pad] + matrix[i-pad] + new_col[:pad])
         else:
             padded_matrix.append(new_col)
