@@ -1,7 +1,7 @@
 """Providing im2col function"""
 import numpy as np
 
-def im2col(image:np.array , fw: int, fh: int, stride: int, pad: int) -> np.array:
+def im2col(image:np.array , fw: int, fh: int, stride: int, pad: int) -> np.array: # pylint: disable=too-many-locals
     """image : 4dim (N, C, W, H) -> 2dim"""
     #패딩처리
     image = np.pad(image,
