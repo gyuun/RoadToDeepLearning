@@ -3,8 +3,9 @@ import numpy as np
 
 def padding(tensor : np.array, pad : int) -> np.array:
     """4dim array pading function"""
-    n, c, h, w = tensor.shape
-    result = np.zeros((n, c, h + 2*pad, w + 2*pad))
-    result[:,:,pad:pad+h,pad:pad+w] = tensor
+    h = tensor.shape[2]
+    w = tensor.shape[3]
+    result = np.zeros_like(tensor)
+    result[:,:,pad:pad+h,pad:pad+w] = tensor[:,:,:,:]
 
     return result
