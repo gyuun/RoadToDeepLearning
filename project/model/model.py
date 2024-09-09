@@ -1,11 +1,19 @@
-"""Providng Layer class"""
+""" Model
+Attribute
+: 5계층 완전연결 신경망
+: 활성화 함수 Relu
+: 출력층 활성화 함수 Softmax
+: 손실함수 교차엔트로피합 (가중치 감소)
+Optimizer : 
+    가중치 초기값 : He Value
+    매개변수 갱신 : Adam"""
 import os
 import sys
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
 import numpy as np
-from Main_project.layers.layer import Affine, ReLu, SoftmaxWithLoss
+from project.utilities.layers.layers import Affine, ReLu, SoftmaxWithLoss
 
-class Layer:
+class FiveLayerNeuralNetwork:
     """3 hidden layer net object"""
     def __init__( # pylint: disable=too-many-arguments
             self, input_size=784,
@@ -39,6 +47,23 @@ class Layer:
 
         self.t = None
         self.predict_val = None
+
+    def save_weights(self):
+        """save weights checkpoint"""
+        np.save('project/checkpoints/model_weights.npy', self.params)
+
+    def load_weights(self):
+        """load weights to model"""
+        self.params = np.load('project/checkpoints/model_weights.npy', allow_pickle=True).item()
+
+        self.layers['Affine1'].w = self.params['W1']
+        self.layers['Affine1'].b = self.params['b1']
+        self.layers['Affine2'].w = self.params['W2']
+        self.layers['Affine2'].b = self.params['b2']
+        self.layers['Affine3'].w = self.params['W3']
+        self.layers['Affine3'].b = self.params['b3']
+        self.layers['Affine4'].w = self.params['W4']
+        self.layers['Affine4'].b = self.params['b4']
 
     def predict(self, x):
         """순전파 연산. ***Python 3.7부터 딕셔너리에 순서 존재"""

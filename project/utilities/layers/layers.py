@@ -4,7 +4,7 @@ import sys
 
 import numpy as np
 sys.path.append(os.getcwd()) # pylint: disable=wrong-import-position
-from Main_project.functions.function import softmax, cross_entropy_error
+from project.utilities.functions.functions import softmax, cross_entropy_error
 
 class Affine:
     """Affine 계층"""
