@@ -15,7 +15,7 @@ from project.utilities.layers.layers import Affine, ReLu, SoftmaxWithLoss
 
 class FiveLayerNeuralNetwork:
     """3 hidden layer net object"""
-    def __init__( # pylint: disable=too-many-positional-arguments
+    def __init__( # pylint: disable=too-many-arguments
             self, input_size=784,
             first_hidden_layer = 100, second_hidden_layer = 50,
             third_hidden_layer = 50, output= 10):
